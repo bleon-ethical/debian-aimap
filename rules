@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+export DH_GOPKG := github.com/Nicholas-Kloster/aimap
+export DH_GOLANG_EXCLUDES := vendor
+export DH_GOLANG_GO_GENERATE := 1
+
+%:
+	dh $@ --buildsystem=golang --with golang,python3
+
+override_dh_auto_install:
+	dh_auto_install
+	install -D -m 0755 $(CURDIR)/aimap-profile/aimap_profile.py $(CURDIR)/debian/aimap/usr/bin/aimap-profile
+	install -D -m 0644 $(CURDIR)/aimap.1 $(CURDIR)/debian/aimap/usr/share/man/man1/aimap.1
